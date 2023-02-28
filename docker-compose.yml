@@ -3,8 +3,6 @@ version: '2'
 services:
   todo_srvr:
     image: 'abdulsaidov/todo_srvr'
-    build:
-      context: src/main/docker
     container_name: todo_srvr
     depends_on:
       - db

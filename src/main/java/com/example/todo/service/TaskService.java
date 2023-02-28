@@ -5,18 +5,15 @@ import com.example.todo.model.Task;
 import com.example.todo.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService {
   private final TaskRepository taskRepository;
-  private final ExecutorService executorService;
 
   public Task createTask(String title) {
     var dateTime = LocalDateTime.now();
@@ -38,22 +35,20 @@ public class TaskService {
   }
 
   public List<Task> getAllCompletedTasks() {
-    return getAllTasks().stream()
-        .filter(Task::isCompleted)
-        .toList();
+    return taskRepository.findAllByCompleted(true);
   }
 
+  @Transactional
   public Long deleteTask(Long id) {
     taskRepository.deleteById(id);
     return id;
   }
 
+  @Transactional
   public void clearCompletedTasks() {
-    try {
-      deleteCompletedTasksAsync(getAllCompletedTasks()).get();
-    } catch (InterruptedException | ExecutionException e) {
-      throw new RuntimeException(e);
-    }
+    var completedList = getAllCompletedTasks();
+    taskRepository.flush();
+    taskRepository.deleteAllInBatch(completedList);
   }
 
   public Task updateTask(Long id, Task task) {
@@ -64,21 +59,5 @@ public class TaskService {
     current.setUpdated(LocalDateTime.now());
     return taskRepository.save(current);
   }
-  //без особого смысла в этой задаче, просто предыдущая тема была про асинк, так что я еще под впечатлением :)
-  private CompletableFuture<Void> deleteCompletedTasksAsync(List<Task> list) {
-    return CompletableFuture.supplyAsync(
-        () -> {
-          try {
-            return CompletableFuture.allOf(
-                list
-                    .parallelStream()
-                    .map(task -> CompletableFuture.supplyAsync(() -> deleteTask(task.getId()), executorService))
-                    .toArray(CompletableFuture[]::new)).get();
-          } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-          }
-        }
-    );
 
-  }
 }

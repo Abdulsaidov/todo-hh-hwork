@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.concurrent.ExecutorService;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -17,14 +16,11 @@ class TaskServiceTest {
 
   @Autowired
   TaskRepository repository;
-
-  @Autowired
-  ExecutorService executorService;
   TaskService service;
 
   @BeforeEach
   void init() {
-    service = new TaskService(repository, executorService);
+    service = new TaskService(repository);
     repository.saveAll(GenerateData.taskList());
   }
 
