@@ -2,6 +2,7 @@ package com.example.todo.service;
 
 import com.example.todo.exception.TaskNotExist;
 import com.example.todo.model.Task;
+import com.example.todo.model.TaskDTO;
 import com.example.todo.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,15 +47,14 @@ public class TaskService {
 
   @Transactional
   public void clearCompletedTasks() {
-    var completedList = getAllCompletedTasks();
     taskRepository.flush();
+    var completedList = getAllCompletedTasks();
     taskRepository.deleteAllInBatch(completedList);
   }
 
-  public Task updateTask(Long id, Task task) {
+  public Task updateTask(Long id, TaskDTO task) {
     var current = getTask(id);
     current.setTitle(task.getTitle());
-    current.setCreated(task.getCreated());
     current.setCompleted(task.isCompleted());
     current.setUpdated(LocalDateTime.now());
     return taskRepository.save(current);

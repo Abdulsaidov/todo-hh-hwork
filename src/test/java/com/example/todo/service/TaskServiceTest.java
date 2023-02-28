@@ -1,6 +1,7 @@
 package com.example.todo.service;
 
-import com.example.todo.model.Task;
+import com.example.todo.exception.TaskNotExist;
+import com.example.todo.model.TaskDTO;
 import com.example.todo.repository.TaskRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @SpringBootTest
 class TaskServiceTest {
@@ -66,7 +68,13 @@ class TaskServiceTest {
   @Test
   void updateTask() {
     var id = service.getAllTasks().get(0).getId();
-    service.updateTask(id, Task.builder().title("update").build());
+    service.updateTask(id, TaskDTO.builder().title("update").build());
     assertThat(service.getTask(id).getTitle()).isEqualTo("update");
   }
+  @Test
+  void getNotExistTask() {
+    var id = 1000000L;
+   assertThatThrownBy(()->service.getTask(id)).isInstanceOf(TaskNotExist.class);
+  }
+
 }

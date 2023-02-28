@@ -21,8 +21,8 @@ services:
       - POSTGRES_DB=todo
     ports:
         - "5432:5432"
-  front:
+  todo_front:
     image: 'abdulsaidov/todo_front'
-    container_name: front
+    container_name: todo_front
     ports:
       - "1337:1337"
