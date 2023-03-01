@@ -1,6 +1,6 @@
 package com.example.todo.controller;
 
-import com.example.todo.model.TaskDTO;
+import com.example.todo.model.TaskDto;
 import com.example.todo.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,17 +23,17 @@ public class TaskController {
   private final TaskService taskService;
 
   @GetMapping("/all")
-  public List<TaskDTO> getAllTasks() {
+  public List<TaskDto> getAllTasks() {
     return taskService.getAllTaskDto();
   }
 
   @PostMapping("/add")
-  public TaskDTO postTask(@RequestBody String description) {
+  public TaskDto postTask(@RequestBody String description) {
     return taskService.createTask(description);
   }
 
   @PatchMapping("/update/{id}")
-  public TaskDTO updateTask(@RequestBody TaskDTO task, @PathVariable Long id) {
+  public TaskDto updateTask(@RequestBody TaskDto task, @PathVariable Long id) {
     return taskService.updateTask(id, task);
   }
 

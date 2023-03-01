@@ -1,7 +1,7 @@
 package com.example.todo.service;
 
 import com.example.todo.exception.TaskNotExist;
-import com.example.todo.model.TaskDTO;
+import com.example.todo.model.TaskDto;
 import com.example.todo.repository.TaskRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,7 +62,7 @@ class TaskServiceTest {
   @Test
   void updateTask() {
     var id = service.getAllTaskDto().get(0).getId();
-    service.updateTask(id, TaskDTO.builder().title("update").build());
+    service.updateTask(id, TaskDto.builder().title("update").build());
     assertThat(service.getTask(id).getTitle()).isEqualTo("update");
   }
 
