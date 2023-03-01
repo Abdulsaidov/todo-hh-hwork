@@ -61,6 +61,7 @@ public class TaskService {
   public Task getTask(Long id) {
     return taskRepository.findById(id).orElseThrow(() -> new TaskNotExist("task # " + id + " is not exist yet"));
   }
+
   private TaskDto convertToDto(Task task) {
     return modelMapper.map(task, TaskDto.class);
   }
