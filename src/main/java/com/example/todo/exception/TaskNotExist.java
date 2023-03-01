@@ -1,6 +1,11 @@
 package com.example.todo.exception;
 
-public class TaskNotExist extends RuntimeException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.NoSuchElementException;
+@ResponseStatus(code = HttpStatus.NOT_FOUND)
+public class TaskNotExist extends NoSuchElementException {
   public TaskNotExist() {
   }
 
@@ -11,4 +16,5 @@ public class TaskNotExist extends RuntimeException {
   public TaskNotExist(String message, Throwable cause) {
     super(message, cause);
   }
+
 }
