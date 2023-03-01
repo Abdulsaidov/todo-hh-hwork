@@ -1,6 +1,11 @@
 package com.example.todo.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Task {
   @Id
-  @GeneratedValue (strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @Column(nullable = false)
   private String title;
@@ -26,4 +31,5 @@ public class Task {
   private LocalDateTime updated;
   @Column
   private boolean completed;
+
 }

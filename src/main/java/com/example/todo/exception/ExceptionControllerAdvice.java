@@ -20,4 +20,5 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
         ErrorResponse error = new ErrorResponse("Такой todo еще не создано", details);
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
 }

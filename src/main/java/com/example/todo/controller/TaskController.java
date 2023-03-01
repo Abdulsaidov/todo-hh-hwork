@@ -4,6 +4,7 @@ import com.example.todo.model.TaskDTO;
 import com.example.todo.service.TaskDtoPrepService;
 import com.example.todo.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class TaskController {
   }
 
   @DeleteMapping("/clear")
+  @ResponseStatus(HttpStatus.OK)
   public void deleteCompletedTask() {
     taskService.clearCompletedTasks();
   }

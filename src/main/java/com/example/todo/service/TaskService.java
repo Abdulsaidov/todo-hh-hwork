@@ -52,6 +52,7 @@ public class TaskService {
     taskRepository.deleteAllInBatch(completedList);
   }
 
+  @Transactional
   public Task updateTask(Long id, TaskDTO task) {
     var current = getTask(id);
     current.setTitle(task.getTitle());
