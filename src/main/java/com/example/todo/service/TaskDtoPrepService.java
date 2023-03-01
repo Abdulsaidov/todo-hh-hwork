@@ -17,21 +17,22 @@ public class TaskDtoPrepService {
   private final ModelMapper modelMapper;
 
 
-  public TaskDTO getTaskDTO(String title) {
+
+  public TaskDTO getTaskDto(String title) {
     var task = service.createTask(title);
-    return convertToDTO(task);
+    return convertToDto(task);
   }
 
-  public TaskDTO updateTaskDTO( Long id,TaskDTO dto) {
+  public TaskDTO updateTaskDto( Long id,TaskDTO dto) {
     var task = service.updateTask(id,dto);
-    return convertToDTO(task);
+    return convertToDto(task);
   }
 
-  public List<TaskDTO> getAllTaskDTO(){
-    return service.getAllTasks().stream().map(this::convertToDTO).collect(Collectors.toList());
+  public List<TaskDTO> getAllTaskDto(){
+    return service.getAllTasks().stream().map(this::convertToDto).collect(Collectors.toList());
   }
 
-  private TaskDTO convertToDTO(Task task) {
+  private TaskDTO convertToDto(Task task) {
     return modelMapper.map(task, TaskDTO.class);
   }
 

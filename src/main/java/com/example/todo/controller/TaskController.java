@@ -18,17 +18,17 @@ public class TaskController {
 
   @GetMapping("/all")
   public List<TaskDTO> getAllTasks() {
-    return prepService.getAllTaskDTO();
+    return prepService.getAllTaskDto();
   }
 
   @PostMapping("/add")
   public TaskDTO postTask(@RequestBody String description) {
-    return prepService.getTaskDTO(description);
+    return prepService.getTaskDto(description);
   }
 
   @PatchMapping("/update/{id}")
   public TaskDTO updateTask(@RequestBody TaskDTO task, @PathVariable Long id) {
-    return prepService.updateTaskDTO(id, task);
+    return prepService.updateTaskDto(id, task);
   }
 
   @DeleteMapping("/delete/{id}")

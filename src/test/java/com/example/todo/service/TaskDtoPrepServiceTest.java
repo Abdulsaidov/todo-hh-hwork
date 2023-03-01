@@ -23,8 +23,8 @@ class TaskDtoPrepServiceTest {
   }
 
   @Test
-  void getTaskDTO()  {
-    var dto = prepService.getTaskDTO("todo");
+  void getTaskDto()  {
+    var dto = prepService.getTaskDto("todo");
     assertThat(dto.getTitle()).isEqualTo("todo");
     assertThat(dto.getId()).isNotNull();
     assertThat(dto.isCompleted()).isFalse();
